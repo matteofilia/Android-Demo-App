@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="style/style_main.css">
+    <link rel="shortcut icon" type="image/png" href="icon/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+    <script src="jquery.js"></script>
+    <script src="handlebars.js"></script>
+    <title>COMP2406A4</title>
+  </head>
+  <body>
+    
+    <div class="main-container">
+      <div class="title-container">
+        <h1>Matteo's Cool Car Server</h1>
+        <div class="author-box">
+          <h2><span class="bold">Matteo Filia</span> 101074480</h2>
+          <h2><span class="bold">COMP2406A4</span></h2>
+        </div>
+      </div>
+      <div>    
+        <div id="controls-container">
+          <input class="input-box" id="input__manufacturer" type="text" placeholder="Manufacturer Name(s)">
+          <button class="button" id="button__search">Search</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="content" class="flexbox">
+    </div>
+     
+    <div id="dialog">
+      <div id="dialog-content">
+        <p id="dialog-message">Message content goes here</p>
+        <button class="button" id="dialog-close">Ok</button>
+      </div>
+    </div>
+  </body>
+  <script src="client.js"></script>
+
+  <script id="car-template" type="text/x-handlebars-template">
+    <div class="car__container">
+      <a href="{{Link}}" target="_blank">
+        <img class="car__image" src="{{FullPictureLink}}"/>
+        <p class="car__name">{{Manufacturer}} {{Model}}</p>
+      </a>
+      <div class="car__info-box">
+          <p class="car__property">Generation: 
+              <span class="car__data">{{Generation}}</span>
+          </p>
+          <p class="car__property">Year Introduced: 
+              <span class="car__data">{{YearIntroduced}}</span>
+          </p>
+          <p class="car__property">Engine Type: 
+              <span class="car__data">{{EngineType}}</span>
+          </p>
+          <p class="car__property">Layout: 
+              <span class="car__data">{{Layout}}</span>
+          </p>
+      </div>
+      <div class="car__doug-box">
+            <p class="car__property">
+              <a http://www.dougdemuro.com/uncategorized/welcome-to-the-dougscore/href="http://www.dougdemuro.com/uncategorized/welcome-to-the-dougscore/">DougScore:</a> 
+              <span class="car__data">{{DougScore}}</span>
+            </p>
+            <p class="car__property {{HideClass}}">Weekend: 
+              <span class="car__data">{{WeekendScore}}</span>
+            </p>
+            <p class="car__property {{HideClass}}">Daily: 
+              <span class="car__data">{{DailyScore}}</span>
+            </p>
+        </div>
+    </div>
+  </script>
+</html>
