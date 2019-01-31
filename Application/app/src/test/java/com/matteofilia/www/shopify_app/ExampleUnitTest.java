@@ -1,4 +1,4 @@
-package com.matteofilia.demoandroidapp;
+package com.matteofilia.www.shopify_app;
 
 import org.junit.Test;
 

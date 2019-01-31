@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Demo Android App</string>
+    <string name="app_name">Shopify Challenge Application</string>
+
+    <string name="extra_collection_id">EXTRA_COLLECTION_ID</string>
+    <string name="extra_collection_title">EXTRA_COLLECTION_TITLE</string>
+    <string name="extra_collection_image_url">EXTRA_COLLECTION_IMAGE_URL</string>
+    <string name="label_in_stock">In Stock</string>
 </resources>

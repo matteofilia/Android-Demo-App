@@ -22,8 +22,29 @@ function databaseDebug(db) {
 // Static file service
 app.use(express.static(__dirname + ROOT_DIR))
 
-// API service
-app.get('/api', (req, res) => { 
+app.get('/getMakes', (req, res) => {
+  //Parse query
+  let jQuery = qstring.parse(url.parse(req.url).query)
+  res.writeHead(200)
+  
+  console.log("Getting all available makes")
+  
+  let sql = `SELECT DISTINCT Manufacturer FROM CoolCars`
+  db.all(sql, (err, records) => {
+    console.log(records)
+    
+    // Turn request into simple array
+    var array = []
+    for (record of records) {
+      array.push(record.Manufacturer)
+    }
+    
+    res.write(JSON.stringify({makes: array}))
+    res.end()
+  })
+})
+
+app.get('/getCars', (req, res) => { 
   // Parse query
   let query = qstring.parse(url.parse(req.url).query)
   res.writeHead(200)
