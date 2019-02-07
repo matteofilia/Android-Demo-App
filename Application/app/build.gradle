@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId 'com.matteofilia.shopify_app'
+        applicationId 'com.matteofilia.demo_app'
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
@@ -31,4 +31,5 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    implementation 'com.android.support:design:27.1.1'
 }

@@ -1,4 +1,4 @@
-package com.matteofilia.www.shopify_app;
+package com.matteofilia.www.application;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
