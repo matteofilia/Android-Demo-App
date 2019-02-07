@@ -22,7 +22,7 @@ function databaseDebug(db) {
 // Static file service
 app.use(express.static(__dirname + ROOT_DIR))
 
-app.get('/getMakes', (req, res) => {
+app.get('/api/getMakes', (req, res) => {
   //Parse query
   let jQuery = qstring.parse(url.parse(req.url).query)
   res.writeHead(200)
@@ -44,34 +44,70 @@ app.get('/getMakes', (req, res) => {
   })
 })
 
-app.get('/getCars', (req, res) => { 
+app.get('/api/getCars', (req, res) => { 
   // Parse query
   let query = qstring.parse(url.parse(req.url).query)
   res.writeHead(200)
 
-  if (query.manufacturer) {
-    // Query database of cool cars based on specific manufacturer
-    console.log(query.manufacturer)
+  if (query.manufacturer || query.minPrice || query.maxPrice || query.minYear || query.maxYear) {
     
-    // Create a sanitized SQL query to get multiple manufacturers
-    // Use COLLATE NOCASE to ensure that capitalization doesn't matter
-    let sanitizedInputs = query.manufacturer.split(",")
-    let sql = `SELECT * FROM CoolCars WHERE Manufacturer=@0 COLLATE NOCASE`
-    for (let i = 1; i < sanitizedInputs.length; i++) {
-      sql += ` OR Manufacturer=@${i}`
-      sql += " COLLATE NOCASE"
+    let i = 0;
+    let sql = `SELECT * FROM CoolCars WHERE `
+    var sanitizedInputs = []
+    
+    if (query.manufacturer) {
+      // Create a sanitized SQL query to get multiple manufacturers
+      // Use COLLATE NOCASE to ensure that capitalization doesn't matter
+      for (var m of query.manufacturer.split(",")) sanitizedInputs.push(m)
+      i = 1
+      sql += `(Manufacturer=@0 COLLATE NOCASE`
+      for (; i < sanitizedInputs.length; i++) {
+        sql += ` OR Manufacturer=@${i}`
+        sql += `COLLATE NOCASE`
+      }
+      sql += `)`
     }
-
-    console.log("Complex query = " + sql + "\n" + sanitizedInputs)
+    
+    // Query for year
+    if (query.minYear) {
+      if (i != 0) sql += ` AND `
+      sql += `Year >= @${i++}`
+      sanitizedInputs.push(query.minYear);
+    }
+    if (query.maxYear) {
+      if (i != 0) sql += ` AND `
+      sql += `Year <= @${i++}`
+      sanitizedInputs.push(query.maxYear);
+    }
+    
+    // Query for price
+    if (query.minPrice) {
+      if (i != 0) sql += ` AND `
+      sql += `ListPrice >= @${i++}`
+      sanitizedInputs.push(query.minPrice);
+    }
+    if (query.maxPrice) {
+      if (i != 0) sql += ` AND `
+      sql += `ListPrice <= @${i++}`
+      sanitizedInputs.push(query.maxPrice);
+    }
+    sql += `;`
+    
+    console.log("\nSQL query: \n" + sql + "\n")
+    console.log("Sanitized inputs : \n" + sanitizedInputs + "\n")
 
     db.all(sql, sanitizedInputs, (err, records) => {
+      console.log("SQL Query returned: \n" + JSON.stringify(records) + "\n")
       res.write(JSON.stringify(records))
       res.end()
     })
     
   } else {
     // If no specific manufacturer is queried, return all records
-    db.all("SELECT * FROM CoolCars", [], (err, records) => {
+    let sql = "SELECT * FROM CoolCars"
+    console.log("\nSQL query: \n" + sql + "\n")
+    db.all(sql, [], (err, records) => {
+      console.log("SQL Query returned: \n" + JSON.stringify(records) + "\n")
       res.write(JSON.stringify(records))
       res.end()
     })
