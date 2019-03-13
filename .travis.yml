@@ -20,6 +20,7 @@ matrix:
         - "7"
       before_script:
         - cd "RESTful API Server"
+        - npm install
       
 
 notifications:
