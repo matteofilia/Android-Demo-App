@@ -12,7 +12,7 @@ matrix:
       before_script:
         - cd Application
         - yes | sdkmanager "platforms;android-27"
-	- yes | sdkmanager "platforms;android-28"
+        - yes | sdkmanager "platforms;android-28"
       script:
         - ./gradlew build connectedCheck
 
@@ -22,7 +22,6 @@ matrix:
       before_script:
         - cd "RESTful API Server"
         - npm install
-      
 
 notifications:
   email:
