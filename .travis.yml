@@ -9,6 +9,8 @@ matrix:
           - build-tools-27.0.3
           - android-27
           - extra
+      before_install:
+        - yes | sdkmanager --licenses
       before_script:
         - cd Application
       script:
