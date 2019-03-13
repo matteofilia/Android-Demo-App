@@ -1,27 +1,27 @@
 matrix:
-	include: 
-		- language: android
-		  android:
-  		components:
-    		- tools
-    		- tools
-    		- platform-tools
-    		- build-tools-27.0.3
-    		- android-27
-			before_install:
-  			- yes | sdkmanager "platforms;android-27"
-			before_script:
-				- cd Application
-			script:
-   			- ./gradlew build connectedCheck
+  include: 
+    - language: android
+      android:
+        components:
+          - tools
+          - tools
+          - platform-tools
+          - build-tools-27.0.3
+          - android-27
+      before_install:
+        - yes | sdkmanager "platforms;android-27"
+      before_script:
+        - cd Application
+      script:
+        - ./gradlew build connectedCheck
 
-		- language: node_js
-			node_js:
-				- "7"
-			before_script:
-				- cd "RESTful API Server"
-			
+    - language: node_js
+      node_js:
+        - "7"
+      before_script:
+        - cd "RESTful API Server"
+      
 
 notifications:
-	email:
-		- matteo@matteofilia.com
+  email:
+    - matteo@matteofilia.com
